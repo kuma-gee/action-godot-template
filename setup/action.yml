@@ -62,6 +62,8 @@ runs:
 
         # this needs to be disabled
         sed -e "/encrypt_directory/c\encrypt_directory=false" -i export_presets.cfg
+
+        cat export_presets.cfg
       shell: bash
       working-directory: ${{ inputs.game-folder }}
       env:
