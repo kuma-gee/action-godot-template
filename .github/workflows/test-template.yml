@@ -3,7 +3,7 @@ name: Test for template build
 on:
   push:
     branches:
-      - main
+      - master
 
 concurrency:
   group: ${{ github.workflow }}
