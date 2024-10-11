@@ -34,9 +34,25 @@ jobs:
           echo "Exported godot game with following settings: "
           cat godot-game/export_presets.cfg
           cat godot-game/.godot/export_credentials.cfg
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: game-build
+          path: build/linux/*
+          if-no-files-found: error
+  
+  run-game:
+    runs-on: ubuntu-latest
+    needs: build-project
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: game-build
+          path: game
+
       - name: Run Game
         run: |
-          ./build/linux/main.x86_64 > result.txt
+          ./game/main.x86_64 > result.txt
           OUTPUT=$(echo result.txt | grep "GAME SUCCESSFUL")
 
           if [ -z "$OUTPUT" ]; then
