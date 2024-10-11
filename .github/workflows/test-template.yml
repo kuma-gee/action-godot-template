@@ -48,13 +48,12 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           pattern: game-build
-          path: game
       
-      - run: ls game
+      - run: ls game-build
 
       - name: Run Game
         run: |
-          ./game/main.x86_64 > result.txt
+          ./game-build/main.x86_64 > result.txt
           OUTPUT=$(echo result.txt | grep "GAME SUCCESSFUL")
 
           if [ -z "$OUTPUT" ]; then
