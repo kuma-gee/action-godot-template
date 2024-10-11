@@ -43,7 +43,7 @@ runs:
 
         for i in $(seq 1 5); do
           echo "[preset.$i]" >> $FILE
-          echo 'script_encryption_key="$KEY"' >> $FILE
+          echo "script_encryption_key=\"$KEY\"" >> $FILE
         done
       shell: bash
       working-directory: ${{ inputs.game-folder }}
