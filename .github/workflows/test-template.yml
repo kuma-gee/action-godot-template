@@ -5,10 +5,6 @@ on:
     branches:
       - master
 
-concurrency:
-  group: ${{ github.workflow }}
-  cancel-in-progress: true
-
 jobs:
   build-templates:
     uses: ./.github/workflows/godot-template-build.yml
