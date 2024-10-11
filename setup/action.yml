@@ -60,7 +60,8 @@ runs:
         sed -e "/encrypt_pck/c\encrypt_pck=true" -i export_presets.cfg
         sed -e "/encryption_include_filters/c\encryption_include_filters=\"*\"" -i export_presets.cfg
 
-        cat export_presets.cfg
+        # this needs to be disabled
+        sed -e "/encrypt_directory/c\encrypt_directory=false" -i export_presets.cfg
       shell: bash
       working-directory: ${{ inputs.game-folder }}
       env:

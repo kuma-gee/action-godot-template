@@ -6,15 +6,15 @@ on:
       - master
 
 jobs:
-  build-templates:
-    uses: ./.github/workflows/godot-template-build.yml
-    with:
-      version: 4.3
-    secrets: inherit
+  # build-templates:
+  #   uses: ./.github/workflows/godot-template-build.yml
+  #   with:
+  #     version: 4.3
+  #   secrets: inherit
   
   build-project:
     runs-on: ubuntu-latest
-    needs: build-templates
+    # needs: build-templates
     container: barichello/godot-ci:4.3
     steps:
       - uses: actions/checkout@v4
@@ -32,7 +32,7 @@ jobs:
           godot --export-release --headless --path godot-game linux "../build/linux/main.x86_64"
 
           echo "Exported godot game with following settings: "
-          cat godot-game/.godot/export_presets.cfg
+          cat godot-game/export_presets.cfg
           cat godot-game/.godot/export_credentials.cfg
       - name: Run Game
         run: |
