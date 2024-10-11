@@ -1,6 +1,13 @@
 name: Build Godot Templates
 
 on:
+  workflow_call:
+    inputs:
+      version:
+        description: 'Godot Version'
+        required: true
+        type: string
+        default: '4.3'
   workflow_dispatch:
     inputs:
       version:
