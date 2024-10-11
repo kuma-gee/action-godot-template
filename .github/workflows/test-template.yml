@@ -9,8 +9,11 @@ concurrency:
   group: ${{ github.workflow }}
   cancel-in-progress: true
 
+env:
+  ENCRYPTION_KEY: de24eb1bba105a19610b691a0815a49bfb7a49b93ecbfd3761324a636c730366
+
 jobs:
-  test-godot-template:
+  template-build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -22,11 +25,56 @@ jobs:
         with:
           version: 4.3
           platform: ${{ matrix.platform }}
-          encryption-key: de24eb1bba105a19610b691a0815a49bfb7a49b93ecbfd3761324a636c730366
-      - run: |
-          if [ ! -f $FILE  ]; then
-            echo "::error::Template file not found"
+          encryption-key: ${{ env.ENCRYPTION_KEY }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: template-${{ matrix.platform }}
+          path: custom_templates/
+          if-no-files-found: error
+
+  release-godot-template:
+    runs-on: ubuntu-latest
+    needs: template-build
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: template-*
+          path: bin
+          merge-multiple: true
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          prerelease: false
+          files: bin/*
+          name: Godot ${{ inputs.version }} Templates
+          tag_name: template-${{ inputs.version }}
+  
+  build-with-template:
+    runs-on: ubuntu-latest
+    needs: release-godot-template
+    container: barichello/godot-ci:4.3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Templates
+        uses: ./setup
+        with:
+          version: 4.3
+          channel: linux
+          encryption-key: ${{ env.ENCRYPTION_KEY }}
+          game-folder: godot-game
+      
+      - name: Build Project
+        run: |
+          mkdir -p build/linux
+          godot --export-release --headless --path godot-game linux "../build/linux/main.x86_64"
+
+      - name: Run Game
+        run: |
+          ./build/linux/main.x86_64 > result.txt
+          OUTPUT=$(echo result.txt | grep "GAME SUCCESSFUL")
+
+          if [ -z "$OUTPUT" ]; then
+            echo "Game failed"
             exit 1
           fi
-        env:
-          FILE: ${{ steps.godot-template.outputs.file }}
