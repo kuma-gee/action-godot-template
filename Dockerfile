@@ -1,6 +1,7 @@
 FROM fedora:40
 
 RUN dnf install -y \
+  git \
   scons \
   pkgconfig \
   libX11-devel \
