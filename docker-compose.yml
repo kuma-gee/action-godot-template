@@ -1,0 +1,11 @@
+# For testing it locally
+version: '3.0'
+
+services:
+  build:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ../../:/app # mount folder with godot already downloaded to skip the download
+    working_dir: /app
