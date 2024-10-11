@@ -23,7 +23,7 @@ jobs:
         with:
           version: 4.3
           channel: linux
-          encryption-key: ${{ env.ENCRYPTION_KEY }}
+          encryption-key: ${{ secrets.ENCRYPTION_KEY }}
           game-folder: godot-game
       
       - name: Build Project
@@ -31,6 +31,9 @@ jobs:
           mkdir -p build/linux
           godot --export-release --headless --path godot-game linux "../build/linux/main.x86_64"
 
+          echo "Exported godot game with following settings: "
+          cat godot-game/.godot/export_presets.cfg
+          cat godot-game/.godot/export_credentials.cfg
       - name: Run Game
         run: |
           ./build/linux/main.x86_64 > result.txt
