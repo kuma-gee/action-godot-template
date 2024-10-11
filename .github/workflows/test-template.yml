@@ -49,10 +49,10 @@ jobs:
         with:
           pattern: game-build
       
-      - run: ls game-build
-
       - name: Run Game
         run: |
+          chmod +x ./game-build/main.x86_64
+
           ./game-build/main.x86_64 > result.txt
           OUTPUT=$(echo result.txt | grep "GAME SUCCESSFUL")
 
