@@ -49,6 +49,8 @@ jobs:
         with:
           pattern: game-build
           path: game
+      
+      - run: ls game
 
       - name: Run Game
         run: |
