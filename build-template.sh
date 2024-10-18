@@ -12,6 +12,9 @@ if [ ${#ENCRYPTION_KEY} -ne 64 ]; then
     exit 1
 fi
 
+/emsdk/emsdk activate latest
+source /emsdk/emsdk_env.sh
+
 if [ ! -d godot ]; then
     git clone -b "$GODOT_VERSION-stable" --single-branch https://github.com/godotengine/godot.git
 fi

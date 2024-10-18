@@ -17,10 +17,14 @@ RUN dnf install -y \
   libudev-devel \
   gcc-c++ \
   libstdc++-static \
-  libatomic-static
+  libatomic-static \
+  python3
 
 RUN dnf -y install --setopt=install_weak_deps=False \
     mingw32-gcc mingw32-gcc-c++ mingw32-winpthreads-static mingw64-gcc mingw64-gcc-c++ mingw64-winpthreads-static
+
+RUN git clone https://github.com/emscripten-core/emsdk.git
+RUN /emsdk/emsdk install latest
 
 COPY build-template.sh /build-template.sh
 
