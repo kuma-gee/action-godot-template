@@ -33,7 +33,7 @@ scons platform=$PLATFORM target=$TARGET arch=$ARCH tools=no debug_symbols=no \
 
 cd ../
 
-FILE="godot/bin/$(ls godot/bin -I '*.console.*' | grep $PLATFORM)"
+FILE="godot/bin/$(ls godot/bin -I '*.console.*' -I '*.js' -I '*.wasm' | grep $PLATFORM)"
 EXT="${FILE##*.}"
 TEMPLATE_FILE=custom_templates/$TARGET.$PLATFORM.$EXT
 mkdir -p custom_templates
