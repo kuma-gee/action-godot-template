@@ -6,6 +6,9 @@ ENCRYPTION_KEY="$3"
 
 TARGET="template_release"
 ARCH="x86_64"
+if [ $PLATFORM = "web" ]; then
+    ARCH="wasm32"
+fi
 
 if [ ${#ENCRYPTION_KEY} -ne 64 ]; then
     echo "Invalid encryption key"
