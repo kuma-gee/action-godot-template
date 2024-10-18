@@ -1,7 +1,7 @@
 #!/bin/sh
 
 GODOT_VERSION="${1:-4.3}"
-PLATFORM="${2:-windows}"
+PLATFORM="${2:-web}"
 ENCRYPTION_KEY="$3"
 
 TARGET="template_release"
@@ -15,7 +15,8 @@ if [ ${#ENCRYPTION_KEY} -ne 64 ]; then
     exit 1
 fi
 
-/emsdk/emsdk activate latest
+# Higher version has a regession again that errors the web build
+/emsdk/emsdk activate 3.1.64
 source /emsdk/emsdk_env.sh
 
 if [ ! -d godot ]; then

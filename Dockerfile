@@ -24,7 +24,7 @@ RUN dnf -y install --setopt=install_weak_deps=False \
     mingw32-gcc mingw32-gcc-c++ mingw32-winpthreads-static mingw64-gcc mingw64-gcc-c++ mingw64-winpthreads-static
 
 RUN git clone https://github.com/emscripten-core/emsdk.git
-RUN /emsdk/emsdk install latest
+RUN /emsdk/emsdk install 3.1.64
 
 COPY build-template.sh /build-template.sh
 
