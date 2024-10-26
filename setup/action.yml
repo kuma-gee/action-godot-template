@@ -41,7 +41,7 @@ runs:
         FILE=".godot/export_credentials.cfg"
         echo "" > $FILE
 
-        for i in $(seq 1 5); do
+        for i in $(seq 0 5); do
           echo "[preset.$i]" >> $FILE
           echo "script_encryption_key=\"$KEY\"" >> $FILE
         done
