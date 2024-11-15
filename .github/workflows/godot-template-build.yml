@@ -15,7 +15,7 @@ on:
         default: 'linux'
 
 concurrency:
-  group: ${{ github.workflow }}
+  group: ${{ github.workflow }}-${{ inputs.version }}-${{ inputs.platform }}
   cancel-in-progress: true
 
 jobs:
