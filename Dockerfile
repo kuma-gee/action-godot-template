@@ -26,7 +26,7 @@ RUN dnf -y install --setopt=install_weak_deps=False \
 
 # For Web
 RUN git clone https://github.com/emscripten-core/emsdk.git
-RUN /emsdk/emsdk install 3.1.64
+RUN /emsdk/emsdk install 4.0.0
 
 COPY build-template.sh /build-template.sh
 

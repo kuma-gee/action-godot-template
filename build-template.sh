@@ -16,7 +16,7 @@ if [ ${#ENCRYPTION_KEY} -ne 64 ]; then
 fi
 
 # Higher version has a regession again that errors the web build
-/emsdk/emsdk activate 3.1.64
+/emsdk/emsdk activate 4.0.0
 source /emsdk/emsdk_env.sh
 
 if [ ! -d godot ]; then
