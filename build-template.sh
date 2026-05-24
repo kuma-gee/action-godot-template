@@ -25,6 +25,11 @@ fi
 
 cd godot
 
+if [ $PLATFORM = "windows" ]; then
+    # If d3d12=no is not set, we need directx 12
+    python misc/scripts/install_d3d12_sdk_windows.py
+fi
+
 # Ensure we don't include editor code in export template builds.
 rm -rf editor
 
