@@ -10,7 +10,7 @@ if [ $PLATFORM = "web" ]; then
     ARCH="wasm32"
 fi
 
-if [ ${#ENCRYPTION_KEY} -ne 64 ]; then
+if [ ! -z "$ENCRYPTION_KEY" ] && [ ${#ENCRYPTION_KEY} -ne 64 ]; then
     echo "Invalid encryption key"
     exit 1
 fi
@@ -27,14 +27,17 @@ cd godot
 
 if [ $PLATFORM = "windows" ]; then
     # If d3d12=no is not set, we need directx 12
-    python misc/scripts/install_d3d12_sdk_windows.py
+    python3 misc/scripts/install_d3d12_sdk_windows.py
 fi
 
 # Ensure we don't include editor code in export template builds.
 rm -rf editor
 
+if [ ! -z "$ENCRYPTION_KEY" ]; then
+    export SCRIPT_AES256_ENCRYPTION_KEY="$ENCRYPTION_KEY"
+fi
+
 # Don't use LTO for now, windows build does not work
-export SCRIPT_AES256_ENCRYPTION_KEY="$ENCRYPTION_KEY"
 scons platform=$PLATFORM target=$TARGET arch=$ARCH tools=no debug_symbols=no \
     optimize=size \
     module_text_server_adv_enabled=no module_text_server_fb_enabled=yes # Use fallback text server
