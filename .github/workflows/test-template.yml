@@ -15,13 +15,13 @@ jobs:
   build-project:
     runs-on: ubuntu-latest
     # needs: build-templates
-    container: barichello/godot-ci:4.3
+    container: barichello/godot-ci:4.6
     steps:
       - uses: actions/checkout@v4
       - name: Setup Templates
         uses: ./setup
         with:
-          version: 4.3
+          version: 4.6
           channel: linux
           encryption-key: ${{ secrets.ENCRYPTION_KEY }}
           game-folder: godot-game
@@ -35,7 +35,7 @@ jobs:
           cat godot-game/export_presets.cfg
           cat godot-game/.godot/export_credentials.cfg
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: game-build
           path: build/linux/*
@@ -45,7 +45,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-project
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: game-build
       

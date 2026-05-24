@@ -7,7 +7,7 @@ on:
         description: 'Godot Version'
         required: true
         type: string
-        default: '4.3'
+        default: '4.6'
       platform:
         description: 'Platform to build'
         required: true
@@ -32,7 +32,7 @@ jobs:
           platform: ${{ matrix.platform }}
           encryption-key: ${{ secrets.ENCRYPTION_KEY }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: template-${{ matrix.platform }}
           path: custom_templates/
@@ -42,14 +42,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: template-build
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: template-*
           path: bin
           merge-multiple: true
 
       - name: Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           prerelease: false
           files: bin/*
